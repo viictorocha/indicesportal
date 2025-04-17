@@ -26,7 +26,11 @@ class TokenResponse(BaseModel):
     access_token: str
     token_type: str
 
-
+@router.get("/", response_model=HomeResponse)
+def home():
+    # Dados iniciais
+    return {"mensagem": "Bem vindo!"}
+    
 @router.post("/login", response_model=TokenResponse)
 def login(request: LoginRequest):
     user = fake_user_db.get(request.email)
@@ -38,7 +42,3 @@ def login(request: LoginRequest):
     access_token = create_access_token(data=token_data)
     return {"access_token": access_token, "token_type": "bearer"}
 
-@router.get("/", response_model=HomeResponse)
-def home():
-    # Dados iniciais
-    return {"mensagem": "Bem vindo!"}
