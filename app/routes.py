@@ -13,7 +13,7 @@ fake_user_db = {
 }
 
 # Modelo para tela inicial
-class HomeRequest(BaseModel):
+class HomeResponse(BaseModel):
     mensagem: str
 
 # Modelo para a solicitação de login
@@ -38,7 +38,7 @@ def login(request: LoginRequest):
     access_token = create_access_token(data=token_data)
     return {"access_token": access_token, "token_type": "bearer"}
 
-@router.get("/", response_model=Home)
-def home(request: HomeRequest):
+@router.get("/", response_model=HomeResponse)
+def home():
     # Dados iniciais
     return {"mensagem": "Bem vindo!"}
