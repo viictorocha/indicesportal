@@ -39,6 +39,6 @@ def login(request: LoginRequest):
     return {"access_token": access_token, "token_type": "bearer"}
 
 @router.get("/", response_model=Home)
-def home(request: HomeRequest):
+def home():
     # Dados iniciais
     return {"mensagem": "Bem vindo!"}
