@@ -12,6 +12,10 @@ fake_user_db = {
     }
 }
 
+# Modelo para tela inicial
+class Home(BaseModel):
+    mensagem: str
+
 # Modelo para a solicitação de login
 class LoginRequest(BaseModel):
     email: str
@@ -21,6 +25,7 @@ class LoginRequest(BaseModel):
 class TokenResponse(BaseModel):
     access_token: str
     token_type: str
+
 
 @router.post("/login", response_model=TokenResponse)
 def login(request: LoginRequest):
@@ -33,49 +38,7 @@ def login(request: LoginRequest):
     access_token = create_access_token(data=token_data)
     return {"access_token": access_token, "token_type": "bearer"}
 
-@router.get("/", response_class=HTMLResponse)
-def welcome_page():
-    return """
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Welcome</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f9f9f9;
-                color: #444;
-                text-align: center;
-                margin: 0;
-                padding: 0;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                height: 100vh;
-            }
-            h1 {
-                color: #4caf50;
-                font-size: 2.5rem;
-            }
-            p {
-                font-size: 1.2rem;
-                color: #666;
-            }
-            footer {
-                margin-top: 20px;
-                font-size: 0.9rem;
-                color: #aaa;
-            }
-        </style>
-    </head>
-    <body>
-        <h1>Bem-vindo à nossa API!</h1>
-        <p>Explore os recursos disponíveis acessando a documentação ou outros endpoints.</p>
-        <footer>
-            <p>&copy; 2025 - Nossa Empresa</p>
-        </footer>
-    </body>
-    </html>
-    """
+@router.get("/", response_model=Home)
+def home(request: HomeRequest):
+    # Dados iniciais
+    return {"mensagem": "Bem vindo!"}
